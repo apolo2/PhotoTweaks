@@ -16,9 +16,6 @@ static const NSUInteger kGridLines = 9;
 
 static const CGFloat kCropViewHotArea = 16;
 static const CGFloat kMinimumCropArea = 60;
-static const CGFloat kMaximumCanvasWidthRatio = 0.9;
-static const CGFloat kMaximumCanvasHeightRatio = 0.7;
-static const CGFloat kCanvasHeaderHeigth = 60;
 static const CGFloat kCropViewCornerLength = 22;
 
 static CGFloat distanceBetweenPoints(CGPoint point0, CGPoint point1)
@@ -505,16 +502,17 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _maxRotationAngle = maxRotationAngle;
         
         // scale the image
-        _maximumCanvasSize = CGSizeMake(kMaximumCanvasWidthRatio * self.frame.size.width,
-                                        kMaximumCanvasHeightRatio * self.frame.size.height - kCanvasHeaderHeigth);
-        
-        CGFloat scaleX = image.size.width / self.maximumCanvasSize.width;
-        CGFloat scaleY = image.size.height / self.maximumCanvasSize.height;
-        CGFloat scale = MAX(scaleX, scaleY);
-        CGRect bounds = CGRectMake(0, 0, image.size.width / scale, image.size.height / scale);
+        CGFloat cropSquare = self.frame.size.width - 60;
+        CGFloat width = cropSquare;
+        CGFloat height = width * image.size.height / image.size.width;
+        if (height < cropSquare) {
+            height = cropSquare;
+            width = height * image.size.width / image.size.height;
+        }
+        CGRect bounds = CGRectMake(0, 0, width, height);
         _originalSize = bounds.size;
         
-        _centerY = self.maximumCanvasSize.height / 2 + kCanvasHeaderHeigth;
+        _centerY = CGRectGetHeight(self.frame) / 2;//self.maximumCanvasSize.height / 2 + kCanvasHeaderHeigth;
         
         _scrollView = [[PhotoScrollView alloc] initWithFrame:bounds];
         _scrollView.center = CGPointMake(CGRectGetWidth(self.frame) / 2, self.centerY);
