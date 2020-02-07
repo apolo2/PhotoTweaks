@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		00B1B9281ACAA90100A8E285 /* PhotoTweaks.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B1B92A1ACAA90100A8E285 /* PhotoTweaks.strings */; };
 		B71706151A32A18D00A6CC10 /* UIColor+Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = B71706141A32A18D00A6CC10 /* UIColor+Tweak.m */; };
+		BCF1C6D923ED1B7B00D300B2 /* avatar_border@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D623ED1B7A00D300B2 /* avatar_border@3x.png */; };
+		BCF1C6DA23ED1B7B00D300B2 /* avatar_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D723ED1B7A00D300B2 /* avatar_border@2x.png */; };
+		BCF1C6DB23ED1B7B00D300B2 /* avatar_border.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D823ED1B7B00D300B2 /* avatar_border.png */; };
 		CB3496FC1A3207E800C7EB0E /* PhotoTweaksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB3496FB1A3207E800C7EB0E /* PhotoTweaksViewController.m */; };
 		CBD5FA591A28425300D4D520 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD5FA581A28425300D4D520 /* main.m */; };
 		CBD5FA5C1A28425300D4D520 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD5FA5B1A28425300D4D520 /* AppDelegate.m */; };
@@ -34,6 +37,9 @@
 		00B1B9361ACAA98400A8E285 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PhotoTweaks.strings"; sourceTree = "<group>"; };
 		B71706131A32A18D00A6CC10 /* UIColor+Tweak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tweak.h"; sourceTree = "<group>"; };
 		B71706141A32A18D00A6CC10 /* UIColor+Tweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tweak.m"; sourceTree = "<group>"; };
+		BCF1C6D623ED1B7A00D300B2 /* avatar_border@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_border@3x.png"; sourceTree = "<group>"; };
+		BCF1C6D723ED1B7A00D300B2 /* avatar_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_border@2x.png"; sourceTree = "<group>"; };
+		BCF1C6D823ED1B7B00D300B2 /* avatar_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_border.png; sourceTree = "<group>"; };
 		CB3496FA1A3207E800C7EB0E /* PhotoTweaksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTweaksViewController.h; sourceTree = "<group>"; };
 		CB3496FB1A3207E800C7EB0E /* PhotoTweaksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTweaksViewController.m; sourceTree = "<group>"; };
 		CBD5FA531A28425300D4D520 /* PhotoTweaks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoTweaks.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +96,9 @@
 		CBD5FA551A28425300D4D520 /* PhotoTweaks */ = {
 			isa = PBXGroup;
 			children = (
+				BCF1C6D823ED1B7B00D300B2 /* avatar_border.png */,
+				BCF1C6D723ED1B7A00D300B2 /* avatar_border@2x.png */,
+				BCF1C6D623ED1B7A00D300B2 /* avatar_border@3x.png */,
 				CBDE57B41A2CA9EE00285CFF /* PhotoTweaks */,
 				CBD5FA5A1A28425300D4D520 /* AppDelegate.h */,
 				CBD5FA5B1A28425300D4D520 /* AppDelegate.m */,
@@ -202,6 +211,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -224,6 +234,9 @@
 			files = (
 				00B1B9281ACAA90100A8E285 /* PhotoTweaks.strings in Resources */,
 				CBD5FA621A28425300D4D520 /* Main.storyboard in Resources */,
+				BCF1C6DB23ED1B7B00D300B2 /* avatar_border.png in Resources */,
+				BCF1C6D923ED1B7B00D300B2 /* avatar_border@3x.png in Resources */,
+				BCF1C6DA23ED1B7B00D300B2 /* avatar_border@2x.png in Resources */,
 				CBD5FA671A28425300D4D520 /* LaunchScreen.xib in Resources */,
 				CBD5FA641A28425300D4D520 /* Images.xcassets in Resources */,
 			);

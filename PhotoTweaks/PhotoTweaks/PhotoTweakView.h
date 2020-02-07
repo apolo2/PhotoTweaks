@@ -27,6 +27,9 @@ extern const CGFloat kMaxRotationAngle;
 @end
 
 @interface CropView : UIView
+
+@property (nonatomic, assign) BOOL isUsingForAvatar;
+
 @end
 
 @interface PhotoTweakView : UIView
@@ -42,7 +45,8 @@ extern const CGFloat kMaxRotationAngle;
 
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image
-             maxRotationAngle:(CGFloat)maxRotationAngle;
+             maxRotationAngle:(CGFloat)maxRotationAngle
+             isUsingForAvatar:(BOOL)isUsingForAvatar;
 
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image;

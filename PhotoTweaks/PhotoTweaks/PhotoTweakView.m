@@ -152,6 +152,8 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 @property (nonatomic, assign) BOOL cropLinesDismissed;
 @property (nonatomic, assign) BOOL gridLinesDismissed;
 
+@property (nonatomic, strong) UIImageView *avatarMask;
+
 @end
 
 @implementation CropView
@@ -216,8 +218,30 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _lowerLeft.center = CGPointMake(kCropViewCornerLength / 2, self.frame.size.height - kCropViewCornerLength / 2);
         _lowerLeft.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_lowerLeft];
+        
+        _avatarMask = [[UIImageView alloc] initWithFrame:self.bounds];
+        _avatarMask.image = [UIImage imageNamed:@"avatar_border.png"];
     }
     return self;
+}
+
+- (void)setIsUsingForAvatar:(BOOL)isUsingForAvatar {
+    _isUsingForAvatar = isUsingForAvatar;
+    self.upperLeft.hidden = isUsingForAvatar;
+    self.upperRight.hidden = isUsingForAvatar;
+    self.lowerLeft.hidden = isUsingForAvatar;
+    self.lowerRight.hidden = isUsingForAvatar;
+    
+    if (isUsingForAvatar) {
+        self.layer.borderColor = [UIColor clearColor].CGColor;
+        self.layer.borderWidth = 0;
+        [self addSubview:self.avatarMask];
+    } else {
+        self.layer.borderColor = [UIColor cropLineColor].CGColor;
+        self.layer.borderWidth = 1;
+        self.layer.cornerRadius = 0;
+        [self.avatarMask removeFromSuperview];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -402,6 +426,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (void)showCropLines
 {
+    if (self.isUsingForAvatar) {
+        return;
+    }
     self.cropLinesDismissed = NO;
     [UIView animateWithDuration:0.2 animations:^{
         [self showLines:self.horizontalCropLines];
@@ -411,6 +438,10 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (void)showGridLines
 {
+    if (self.isUsingForAvatar) {
+        return;
+    }
+    
     self.gridLinesDismissed = NO;
     [UIView animateWithDuration:0.2 animations:^{
         [self showLines:self.horizontalGridLines];
@@ -420,6 +451,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (void)showLines:(NSArray *)lines
 {
+    if (self.isUsingForAvatar) {
+        return;
+    }
     [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         ((UIView *)obj).alpha = 1.0f;
     }];
@@ -451,6 +485,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 @property (nonatomic, assign) CGFloat centerY;
 @property (nonatomic, assign) CGPoint originalPoint;
 @property (nonatomic, assign) CGFloat maxRotationAngle;
+@property (nonatomic, assign) CGFloat isUsingForAvatar;
 
 @end
 
@@ -459,10 +494,12 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image
              maxRotationAngle:(CGFloat)maxRotationAngle
+             isUsingForAvatar:(BOOL)isUsingForAvatar
 {
     if (self = [super init]) {
         
         self.frame = frame;
+        self.isUsingForAvatar = isUsingForAvatar;
         
         _image = image;
         _maxRotationAngle = maxRotationAngle;
@@ -507,9 +544,15 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _scrollView.photoContentView = self.photoContentView;
         [self.scrollView addSubview:_photoContentView];
         
-        _cropView = [[CropView alloc] initWithFrame:self.scrollView.frame];
+        CGRect cropFrame = self.scrollView.frame;
+        if (self.isUsingForAvatar) {
+            CGFloat minSize = MIN(self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+            cropFrame = CGRectMake(0, 0, minSize, minSize);
+        }
+        _cropView = [[CropView alloc] initWithFrame:cropFrame];
         _cropView.center = self.scrollView.center;
         _cropView.delegate = self;
+        _cropView.isUsingForAvatar = self.isUsingForAvatar;
         [self addSubview:_cropView];
         
         UIColor *maskColor = [UIColor maskColor];
@@ -546,13 +589,23 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         [self addSubview:_resetBtn];
         
         _originalPoint = [self convertPoint:self.scrollView.center toView:self];
+        
+        if (self.isUsingForAvatar) {
+            [self cropEnded:self.cropView];
+            
+            UIView *borderView = [[UIView alloc] initWithFrame:self.cropView.frame];
+            borderView.backgroundColor = [UIColor clearColor];
+            borderView.layer.borderColor = [UIColor colorWithRed:114.0/255.0 green:188.0/255.0 blue:80.0/255.0 alpha:1.0].CGColor;
+            borderView.layer.borderWidth = 2;
+            [self addSubview:borderView];
+        }
     }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image
 {
-    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle];
+    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle isUsingForAvatar:NO];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -561,7 +614,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         return self.slider;
     } else if (CGRectContainsPoint(self.resetBtn.frame, point)) {
         return self.resetBtn;
-    } else if (CGRectContainsPoint(CGRectInset(self.cropView.frame, -kCropViewHotArea, -kCropViewHotArea), point) && !CGRectContainsPoint(CGRectInset(self.cropView.frame, kCropViewHotArea, kCropViewHotArea), point)) {
+    } else if (CGRectContainsPoint(CGRectInset(self.cropView.frame, -kCropViewHotArea, -kCropViewHotArea), point) &&
+               !CGRectContainsPoint(CGRectInset(self.cropView.frame, kCropViewHotArea, kCropViewHotArea), point) &&
+               self.isUsingForAvatar == NO) {
         return self.cropView;
     }
     return self.scrollView;
