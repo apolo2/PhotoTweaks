@@ -592,12 +592,6 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         
         if (self.isUsingForAvatar) {
             [self cropEnded:self.cropView];
-            
-            UIView *borderView = [[UIView alloc] initWithFrame:self.cropView.frame];
-            borderView.backgroundColor = [UIColor clearColor];
-            borderView.layer.borderColor = [UIColor colorWithRed:114.0/255.0 green:188.0/255.0 blue:80.0/255.0 alpha:1.0].CGColor;
-            borderView.layer.borderWidth = 2;
-            [self addSubview:borderView];
         }
     }
     return self;
