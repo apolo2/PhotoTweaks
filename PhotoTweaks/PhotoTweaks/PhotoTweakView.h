@@ -51,6 +51,7 @@ extern const CGFloat kMaxRotationAngle;
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image;
 
+- (void)sliderValueChanged:(UISlider *)sender;
 - (CGPoint)photoTranslation;
 
 @end

@@ -10,7 +10,7 @@
 #import "UIColor+Tweak.h"
 #import <math.h>
 
-const CGFloat kMaxRotationAngle = 0.5;
+const CGFloat kMaxRotationAngle = 1.5;
 static const NSUInteger kCropLines = 2;
 static const NSUInteger kGridLines = 9;
 
@@ -215,6 +215,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _lowerLeft.center = CGPointMake(kCropViewCornerLength / 2, self.frame.size.height - kCropViewCornerLength / 2);
         _lowerLeft.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_lowerLeft];
+        
+        [self dismissCropLines];
+        [self dismissGridLines];
         
         _avatarMask = [[UIImageView alloc] initWithFrame:self.bounds];
         _avatarMask.image = [UIImage imageNamed:@"avatar_border.png"];
@@ -484,6 +487,8 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 @property (nonatomic, assign) CGFloat maxRotationAngle;
 @property (nonatomic, assign) CGFloat isUsingForAvatar;
 
+@property (nonatomic, assign) CGFloat originalRotation;
+
 @end
 
 @implementation PhotoTweakView
@@ -602,9 +607,11 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if (CGRectContainsPoint(self.slider.frame, point)) {
+    if (CGRectContainsPoint(self.slider.frame, point) &&
+        self.slider.hidden == NO) {
         return self.slider;
-    } else if (CGRectContainsPoint(self.resetBtn.frame, point)) {
+    } else if (CGRectContainsPoint(self.resetBtn.frame, point) &&
+               self.resetBtn.hidden == NO) {
         return self.resetBtn;
     } else if (CGRectContainsPoint(CGRectInset(self.cropView.frame, -kCropViewHotArea, -kCropViewHotArea), point) &&
                !CGRectContainsPoint(CGRectInset(self.cropView.frame, kCropViewHotArea, kCropViewHotArea), point) &&
@@ -723,7 +730,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     }
 }
 
-- (void)sliderValueChanged:(id)sender
+- (void)sliderValueChanged:(UISlider *)sender
 {
     // update masks
     [self updateMasks:NO];
@@ -732,7 +739,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     [self.cropView updateGridLines:NO];
     
     // rotate scroll view
-    self.angle = self.slider.value;
+    self.angle = sender.value;
     self.scrollView.transform = CGAffineTransformMakeRotation(self.angle);
     
     // position scroll view

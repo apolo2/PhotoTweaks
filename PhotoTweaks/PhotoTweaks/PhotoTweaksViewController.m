@@ -40,14 +40,14 @@
     }
 
     self.view.clipsToBounds = YES;
-    self.view.backgroundColor = [UIColor photoTweakCanvasBackgroundColor];
+    self.view.backgroundColor = [UIColor colorWithRed:134.0/255.0 green:134.0/255.0 blue:134.0/255.0 alpha:1.0];
 
     [self setupSubviews];
 }
 
 - (void)setupSubviews
 {
-    self.photoView = [[PhotoTweakView alloc] initWithFrame:self.view.bounds image:self.image maxRotationAngle:self.maxRotationAngle isUsingForAvatar:YES];
+    self.photoView = [[PhotoTweakView alloc] initWithFrame:self.view.bounds image:self.image maxRotationAngle:1.5 isUsingForAvatar:YES];
     self.photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.photoView];
     
