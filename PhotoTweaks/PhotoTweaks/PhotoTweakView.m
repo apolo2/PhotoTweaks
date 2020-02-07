@@ -797,4 +797,19 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     return CGPointMake(point.x - zeroPoint.x, point.y - zeroPoint.y);
 }
 
+- (CGAffineTransform)photoTransform {
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    // translate
+    CGPoint translation = [self photoTranslation];
+    transform = CGAffineTransformTranslate(transform, translation.x, translation.y);
+    // rotate
+    transform = CGAffineTransformRotate(transform, self.angle);
+    // scale
+    CGAffineTransform t = self.photoContentView.transform;
+    CGFloat xScale =  sqrt(t.a * t.a + t.c * t.c);
+    CGFloat yScale = sqrt(t.b * t.b + t.d * t.d);
+    transform = CGAffineTransformScale(transform, xScale, yScale);
+    return transform;
+}
+
 @end

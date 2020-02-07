@@ -88,21 +88,7 @@
 
 - (void)saveBtnTapped
 {
-    CGAffineTransform transform = CGAffineTransformIdentity;
-
-    // translate
-    CGPoint translation = [self.photoView photoTranslation];
-    transform = CGAffineTransformTranslate(transform, translation.x, translation.y);
-
-    // rotate
-    transform = CGAffineTransformRotate(transform, self.photoView.angle);
-
-    // scale
-    CGAffineTransform t = self.photoView.photoContentView.transform;
-    CGFloat xScale =  sqrt(t.a * t.a + t.c * t.c);
-    CGFloat yScale = sqrt(t.b * t.b + t.d * t.d);
-    transform = CGAffineTransformScale(transform, xScale, yScale);
-
+    CGAffineTransform transform = [self.photoView photoTransform];
     CGImageRef imageRef = [self newTransformedImage:transform
                                         sourceImage:self.image.CGImage
                                          sourceSize:self.image.size
