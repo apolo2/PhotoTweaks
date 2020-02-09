@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00B1B9281ACAA90100A8E285 /* PhotoTweaks.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B1B92A1ACAA90100A8E285 /* PhotoTweaks.strings */; };
 		B71706151A32A18D00A6CC10 /* UIColor+Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = B71706141A32A18D00A6CC10 /* UIColor+Tweak.m */; };
+		BC106ACF23EFD0B60020F5B6 /* UIImage+Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = BC106ACE23EFD0B60020F5B6 /* UIImage+Tweak.m */; };
 		BCF1C6D923ED1B7B00D300B2 /* avatar_border@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D623ED1B7A00D300B2 /* avatar_border@3x.png */; };
 		BCF1C6DA23ED1B7B00D300B2 /* avatar_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D723ED1B7A00D300B2 /* avatar_border@2x.png */; };
 		BCF1C6DB23ED1B7B00D300B2 /* avatar_border.png in Resources */ = {isa = PBXBuildFile; fileRef = BCF1C6D823ED1B7B00D300B2 /* avatar_border.png */; };
@@ -37,6 +38,8 @@
 		00B1B9361ACAA98400A8E285 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PhotoTweaks.strings"; sourceTree = "<group>"; };
 		B71706131A32A18D00A6CC10 /* UIColor+Tweak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tweak.h"; sourceTree = "<group>"; };
 		B71706141A32A18D00A6CC10 /* UIColor+Tweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tweak.m"; sourceTree = "<group>"; };
+		BC106ACD23EFD0B60020F5B6 /* UIImage+Tweak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tweak.h"; sourceTree = "<group>"; };
+		BC106ACE23EFD0B60020F5B6 /* UIImage+Tweak.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tweak.m"; sourceTree = "<group>"; };
 		BCF1C6D623ED1B7A00D300B2 /* avatar_border@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_border@3x.png"; sourceTree = "<group>"; };
 		BCF1C6D723ED1B7A00D300B2 /* avatar_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_border@2x.png"; sourceTree = "<group>"; };
 		BCF1C6D823ED1B7B00D300B2 /* avatar_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_border.png; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				CBDE57B61A2CAA0600285CFF /* PhotoTweakView.m */,
 				B71706131A32A18D00A6CC10 /* UIColor+Tweak.h */,
 				B71706141A32A18D00A6CC10 /* UIColor+Tweak.m */,
+				BC106ACD23EFD0B60020F5B6 /* UIImage+Tweak.h */,
+				BC106ACE23EFD0B60020F5B6 /* UIImage+Tweak.m */,
 			);
 			path = PhotoTweaks;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				B71706151A32A18D00A6CC10 /* UIColor+Tweak.m in Sources */,
 				CBD5FA591A28425300D4D520 /* main.m in Sources */,
 				CB3496FC1A3207E800C7EB0E /* PhotoTweaksViewController.m in Sources */,
+				BC106ACF23EFD0B60020F5B6 /* UIImage+Tweak.m in Sources */,
 				CBDE57B71A2CAA0700285CFF /* PhotoTweakView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

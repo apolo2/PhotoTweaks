@@ -54,5 +54,6 @@ extern const CGFloat kMaxRotationAngle;
 - (void)sliderValueChanged:(UISlider *)sender;
 - (CGPoint)photoTranslation;
 - (CGAffineTransform)photoTransform;
+- (UIImage *)coppedImage;
 
 @end

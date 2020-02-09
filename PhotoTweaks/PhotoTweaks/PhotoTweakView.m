@@ -9,6 +9,7 @@
 #import "PhotoTweakView.h"
 #import "UIColor+Tweak.h"
 #import <math.h>
+#import "UIImage+Tweak.h"
 
 const CGFloat kMaxRotationAngle = 1.5;
 static const NSUInteger kCropLines = 2;
@@ -789,6 +790,8 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     }];
 }
 
+#pragma mark - Export image
+
 - (CGPoint)photoTranslation
 {
     CGRect rect = [self.photoContentView convertRect:self.photoContentView.bounds toView:self];
@@ -810,6 +813,21 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     CGFloat yScale = sqrt(t.b * t.b + t.d * t.d);
     transform = CGAffineTransformScale(transform, xScale, yScale);
     return transform;
+}
+
+- (UIImage *)coppedImage {
+    CGAffineTransform transform = [self photoTransform];
+    CGImageRef imageRef = [UIImage newTransformedImage:transform
+                                           sourceImage:self.image.CGImage
+                                            sourceSize:self.image.size
+                                     sourceOrientation:self.image.imageOrientation
+                                           outputWidth:self.image.size.width
+                                              cropSize:self.cropView.frame.size
+                                         imageViewSize:self.photoContentView.bounds.size];
+
+    UIImage *image = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return image;
 }
 
 @end
