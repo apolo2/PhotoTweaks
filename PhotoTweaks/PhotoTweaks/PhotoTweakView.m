@@ -245,6 +245,23 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
     }
 }
 
+- (void)setIsUsingMaskCircle:(BOOL)isUsingMaskCircle {
+    if (_isUsingForAvatar == NO) {
+        return;
+    }
+    if (isUsingMaskCircle) {
+        _avatarMask.image = [UIImage imageNamed:@"avatar_border.png"];
+    } else {
+        UIView *view = [[UIView alloc] initWithFrame:self.bounds];
+        view.backgroundColor = [UIColor clearColor];
+        view.layer.borderColor = [UIColor colorWithRed:111.0/255.0 green:190.0/255.0 blue:73.0/255.0 alpha:1.0].CGColor;
+        view.layer.borderWidth = 2.0;
+        view.opaque = NO;
+        UIImage *image = [UIImage imageWithView:view];
+        _avatarMask.image = image;
+    }
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if ([touches count] == 1) {
@@ -498,6 +515,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
                         image:(UIImage *)image
              maxRotationAngle:(CGFloat)maxRotationAngle
              isUsingForAvatar:(BOOL)isUsingForAvatar
+          isUsingAvatarCirble:(BOOL)isAvatarCircle
 {
     if (self = [super init]) {
         
@@ -557,6 +575,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _cropView.center = self.scrollView.center;
         _cropView.delegate = self;
         _cropView.isUsingForAvatar = self.isUsingForAvatar;
+        _cropView.isUsingMaskCircle = isAvatarCircle;
         [self addSubview:_cropView];
         
         UIColor *maskColor = [UIColor maskColor];
@@ -603,7 +622,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image
 {
-    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle isUsingForAvatar:NO];
+    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle isUsingForAvatar:NO isUsingAvatarCirble:NO];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
